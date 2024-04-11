@@ -1,0 +1,49 @@
+.wrapper {
+  --content-max-width: 1160px;
+  --padding-inline: 2rem;
+
+  // Width is has an upper bound of --content-max-width. If the restricting width is
+  // less than that bound, the with will be 100% - 2 * --padding-inline.
+  // The wrapper is centered with margin-inline: auto.
+  width: min(var(--content-max-width), 100% - 2 * var(--padding-inline));
+  margin-inline: auto;
+}
+
+.main-with-sidebar {
+  --main-min-width: 750px;
+  --sidebar-size: 250px;
+  --gap: 2rem;
+
+  display: flex;
+  gap: var(--gap);
+  flex-wrap: wrap;
+
+  & > * {
+    flex-grow: 1;
+  }
+
+  & > main {
+    flex-grow: 999;
+
+    flex-basis: calc(
+      (
+        (var(--main-min-width) - (100% - var(--sidebar-size) - var(--gap))) *
+          9999
+      )
+    );
+
+    @supports (top: sign(1px)) {
+      flex-basis: calc(
+        (
+          sign(
+            (var(--main-min-width) - (100% - var(--sidebar-size) - var(--gap)))
+          )
+        )
+      );
+    }
+  }
+}
+
+.flow > * + * {
+  margin-top: 1em;
+}
